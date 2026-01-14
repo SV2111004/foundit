@@ -15,6 +15,6 @@ router.post("/", authMiddleware, createItem);
 router.get("/", getAllItems);
 
 // GET LOST OR FOUND
-router.get("/:status", getItemsByStatus);
+router.get("/:status",getItemsByStatus);
 
 module.exports = router;
