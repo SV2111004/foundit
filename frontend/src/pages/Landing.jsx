@@ -3,7 +3,19 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 function Landing() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      // already logged in → dashboard
+      navigate("/dashboard");
+    } else {
+      // not logged in → login
+      navigate("/login");
+    }
+  };
 
   return (
     <div
@@ -27,8 +39,10 @@ function Landing() {
           Helping you reconnect with your lost items across campus.
         </p>
 
-        <button onClick={() => navigate("/login")} className="mt-6 px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg text-lg font-semibold" >
-          
+        <button
+          onClick={handleGetStarted}
+          className="mt-6 px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg text-lg font-semibold"
+        >
           Get Started
         </button>
       </div>

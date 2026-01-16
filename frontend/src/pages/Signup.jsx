@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../api/api";
 
 function Signup() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!email.endsWith("@mail.jiit.ac.in")) {
@@ -23,17 +24,18 @@ function Signup() {
       return;
     }
 
-    setError("");
+     try {
+      await API.post("/api/auth/register", {
+        name,
+        email,
+        password,
+        enrollment: email.split("@")[0],
+      });
 
-    console.log({
-      name,
-      email,
-      password,
-    });
-
-    // 🔐 Backend signup will be added later
-
-    navigate("/login");
+      navigate("/login");
+    } catch (err) {
+      setError(err.response?.data?.message || "Signup failed");
+    }
   };
 
   return (

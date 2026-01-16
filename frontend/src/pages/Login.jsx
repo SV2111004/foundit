@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../api/api";
 
 function Login() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // College email validation
@@ -17,15 +18,20 @@ function Login() {
       return;
     }
 
-    setError("");
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      const res = await API.post("/api/auth/login", {
+        email,
+        password,
+      });
 
-    // 🔐 Backend login will come here later
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-    navigate("/dashboard"); // temporary
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed");
+    }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 px-4">
       <div className="bg-gray-800 text-white rounded-xl shadow-lg w-full max-w-md p-8">
