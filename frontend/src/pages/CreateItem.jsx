@@ -100,7 +100,7 @@ function CreateItem() {
             value={formData.title}
             onChange={handleChange}
             required
-            className="w-full bg-[#0f172a] px-4 py-2 rounded outline-none"
+            className="w-full bg-[#384d7d] px-4 py-2 rounded outline-none"
           />
 
           {/* Description */}
@@ -110,7 +110,7 @@ function CreateItem() {
             value={formData.description}
             onChange={handleChange}
             required
-            className="w-full bg-[#0f172a] px-4 py-2 rounded outline-none"
+            className="w-full bg-[#384d7d] px-4 py-2 rounded outline-none"
           />
 
           {/* Category */}
@@ -118,7 +118,7 @@ function CreateItem() {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="w-full bg-[#0f172a] px-4 py-2 rounded outline-none"
+            className="w-full bg-[#384d7d] px-4 py-2 rounded outline-none"
           >
             <option value="electronics">Electronics</option>
             <option value="documents">Documents</option>
@@ -134,7 +134,7 @@ function CreateItem() {
             value={formData.location}
             onChange={handleChange}
             required
-            className="w-full bg-[#0f172a] px-4 py-2 rounded outline-none"
+            className="w-full bg-[#384d7d] px-4 py-2 rounded outline-none"
           />
 
           {/* Date */}
@@ -144,16 +144,28 @@ function CreateItem() {
             value={formData.date}
             onChange={handleChange}
             required
-            className="w-full bg-[#0f172a] px-4 py-2 rounded outline-none"
+            className="w-full bg-[#384d7d] px-4 py-2 rounded outline-none"
           />
 
           {/* 🖼️ Image Upload (OPTIONAL) */}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="w-full bg-[#0f172a] px-4 py-2 rounded outline-none"
-          />
+<div className="w-full">
+  <label className="block text-sm text-gray-300 mb-1">
+    Upload Image (optional)
+  </label>
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleFileChange}
+    className="w-full bg-[#384d7d] px-4 py-2 rounded outline-none
+               border border-white/30 text-white
+               file:mr-4 file:py-1 file:px-3
+               file:rounded file:border-0
+               file:bg-[#1e293b] file:text-white
+               hover:border-white/60 transition"
+  />
+</div>
+
 
           {/* Buttons */}
           <div className="flex gap-4 pt-2">
