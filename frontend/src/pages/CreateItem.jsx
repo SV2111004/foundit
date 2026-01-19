@@ -16,16 +16,25 @@ function CreateItem() {
     category: "electronics",
     location: "",
     date: "",
+    image: null, // 🖼️ NEW
   });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // handle input change
+  // handle text input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  // handle file change
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      image: e.target.files[0],
     });
   };
 
@@ -38,18 +47,25 @@ function CreateItem() {
     try {
       const token = localStorage.getItem("token");
 
-      await API.post(
-        "/api/items",
-        {
-          ...formData,
-          status: type, // 🔥 lost / found auto
+      // 🔥 Use FormData because of image
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("category", formData.category);
+      data.append("location", formData.location);
+      data.append("date", formData.date);
+      data.append("status", type);
+
+      if (formData.image) {
+        data.append("image", formData.image); // 🖼️ optional
+      }
+
+      await API.post("/api/items", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      });
 
       // redirect back after success
       navigate(type === "lost" ? "/items/lost" : "/items/found");
@@ -128,6 +144,14 @@ function CreateItem() {
             value={formData.date}
             onChange={handleChange}
             required
+            className="w-full bg-[#0f172a] px-4 py-2 rounded outline-none"
+          />
+
+          {/* 🖼️ Image Upload (OPTIONAL) */}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
             className="w-full bg-[#0f172a] px-4 py-2 rounded outline-none"
           />
 
