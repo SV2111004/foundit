@@ -3,13 +3,11 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-
-    enrollment: {
+    phone: {
       type: String,
       required: true,
-      unique: true,
+      match: [/^[6-9]\d{9}$/, "Invalid phone number"],
     },
-
     email: {
       type: String,
       required: true,
@@ -19,6 +17,7 @@ const userSchema = new mongoose.Schema(
         "Invalid college email",
       ],
     },
+
 
     password: { type: String, required: true },
   },

@@ -16,7 +16,7 @@ function MyItems() {
 
         // sirf current user ke items
         const myItems = res.data.filter(
-          (item) => item.postedBy?._id === user.id
+          (item) => item.postedBy?._id === user.id,
         );
 
         setItems(myItems);
@@ -35,7 +35,8 @@ function MyItems() {
       <Navbar />
 
       <div className="pt-28 px-6 max-w-6xl mx-auto">
-        <h2 className="text-2xl font-semibold mb-6">My Items</h2>
+        <h2 className="text-2xl font-semibold mb-1">My Items</h2>
+        <p className="text-gray-400 mb-6">📞 Contact: {user.phone}</p>
 
         {loading ? (
           <p className="text-gray-400">Loading your items...</p>
