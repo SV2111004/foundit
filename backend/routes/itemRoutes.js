@@ -9,7 +9,15 @@ const {
 const router = express.Router();
 
 // CREATE (JWT REQUIRED)
-router.post("/", authMiddleware, createItem);
+const upload = require("../middleware/upload");
+
+router.post(
+  "/",
+  authMiddleware,
+  upload.single("image"), // optional image
+  createItem
+);
+
 
 // GET ALL (PUBLIC)
 router.get("/", getAllItems);
