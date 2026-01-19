@@ -47,3 +47,25 @@ exports.getItemsByStatus = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// DELETE ITEM (ONLY OWNER CAN DELETE)
+exports.deleteItem = async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id);
+
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    // 🔐 Check ownership
+    if (item.postedBy.toString() !== req.user) {
+      return res.status(403).json({ message: "Not authorized to delete this item" });
+    }
+
+    await item.deleteOne();
+
+    res.json({ message: "Item deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

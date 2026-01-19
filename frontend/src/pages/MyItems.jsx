@@ -16,7 +16,7 @@ function MyItems() {
 
         // sirf current user ke items
         const myItems = res.data.filter(
-          (item) => item.postedBy?._id === user.id,
+          (item) => item.postedBy?._id === user.id
         );
 
         setItems(myItems);
@@ -29,6 +29,26 @@ function MyItems() {
 
     fetchMyItems();
   }, [user.id]);
+
+  // 🗑️ DELETE HANDLER
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+    try {
+      const token = localStorage.getItem("token");
+
+      await API.delete(`/api/items/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // UI se bhi remove karo
+      setItems(items.filter((item) => item._id !== id));
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to delete item");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#020617] text-white">
@@ -47,7 +67,12 @@ function MyItems() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {items.map((item) => (
-              <ItemCard key={item._id} item={item} />
+              <ItemCard
+                key={item._id}
+                item={item}
+                showDelete={true}          // 👈 delete button enabled
+                onDelete={handleDelete}   // 👈 delete handler
+              />
             ))}
           </div>
         )}

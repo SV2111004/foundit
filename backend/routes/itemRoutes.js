@@ -4,7 +4,9 @@ const {
   createItem,
   getAllItems,
   getItemsByStatus,
+  deleteItem,
 } = require("../controllers/itemController");
+
 
 const router = express.Router();
 
@@ -24,5 +26,9 @@ router.get("/", getAllItems);
 
 // GET LOST OR FOUND
 router.get("/:status",getItemsByStatus);
+
+// DELETE ITEM (ONLY OWNER)
+router.delete("/:id", authMiddleware, deleteItem);
+
 
 module.exports = router;
