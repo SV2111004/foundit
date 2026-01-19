@@ -6,13 +6,18 @@ function Signup() {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
+  const [phone, setphone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      setError("Enter a valid 10-digit phone number");
+      return;
+    }
 
     if (!email.endsWith("@mail.jiit.ac.in")) {
       setError("Only JIIT college email IDs are allowed");
@@ -24,12 +29,12 @@ function Signup() {
       return;
     }
 
-     try {
+    try {
       await API.post("/api/auth/register", {
         name,
+        phone,
         email,
         password,
-        enrollment: email.split("@")[0],
       });
 
       navigate("/login");
@@ -60,6 +65,18 @@ function Signup() {
               className="w-full px-3 py-2 rounded bg-gray-700 outline-none focus:ring-2 focus:ring-red-500"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm mb-1">Phone Number</label>
+            <input
+              type="tel"
+              placeholder="10-digit phone number"
+              className="w-full px-3 py-2 rounded bg-gray-700 outline-none focus:ring-2 focus:ring-red-500"
+              value={phone}
+              onChange={(e) => setphone(e.target.value)}
               required
             />
           </div>

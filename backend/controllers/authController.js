@@ -5,14 +5,9 @@ const jwt = require("jsonwebtoken");
 // REGISTER
 exports.register = async (req, res) => {
   try {
-    const { name, enrollment, email, password } = req.body;
+    const { name, phone, email, password } = req.body;
 
-    // Enrollment must be part of email
-    if (!email.includes(enrollment)) {
-      return res.status(400).json({
-        message: "Enrollment number does not match college email",
-      });
-    }
+  
 
     const existingUser = await User.findOne({ email });
     if (existingUser)
@@ -20,9 +15,15 @@ exports.register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const existingPhone = await User.findOne({ phone });
+    if (existingPhone) {
+      return res.status(400).json({ message: "Phone number already in use" });
+}
+
+
     await User.create({
       name,
-      enrollment,
+      phone,
       email,
       password: hashedPassword,
     });
@@ -57,6 +58,7 @@ exports.login = async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
+        phone: user.phone,
         email: user.email,
       },
     });

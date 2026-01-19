@@ -20,7 +20,7 @@ exports.createItem = async (req, res) => {
 exports.getAllItems = async (req, res) => {
   try {
     const items = await Item.find()
-      .populate("postedBy", "name email")
+      .populate("postedBy", "name email phone")
       .sort({ createdAt: -1 });
 
     res.json(items);
@@ -39,7 +39,7 @@ exports.getItemsByStatus = async (req, res) => {
     }
 
     const items = await Item.find({ status })
-      .populate("postedBy", "name email")
+      .populate("postedBy", "name email phone")
       .sort({ createdAt: -1 });
 
     res.json(items);

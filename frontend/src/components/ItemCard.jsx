@@ -41,6 +41,13 @@ function ItemCard({ item }) {
           <span className="text-gray-500">Posted by:</span>{" "}
           {item.postedBy?.name}
         </p>
+
+        {/* 📞 Phone number */}
+        {item.postedBy?.phone && (
+          <p className="text-emerald-400 font-medium">
+            📞 {item.postedBy.phone}
+          </p>
+        )}
       </div>
     </div>
   );
