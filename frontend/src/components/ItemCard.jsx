@@ -1,17 +1,33 @@
 function ItemCard({ item, showDelete = false, onDelete }) {
   return (
-    <div className="bg-[#0f172a] border border-white/10 rounded-xl p-5 hover:border-white/20 transition">
+   <div className="
+  break-inside-avoid
+  bg-[#0f172a]
+  border border-white/10
+  rounded-xl
+  p-5
+  transition
+  shadow-[0_0_20px_rgba(255,255,255,0.05)]
+  hover:shadow-[0_0_35px_rgba(255,255,255,0.12)]
+  hover:border-white/30
+">
+
+
       
-      {/* 🖼️ Image */}
-      {item.image && (
-        <div className="w-full mb-4 bg-black/20 rounded overflow-hidden flex justify-center">
-          <img
-            src={`http://localhost:5000${item.image}`}
-            alt={item.title}
-            className="max-h-64 object-contain"
-          />
-        </div>
-      )}
+     
+     {/* 🖼️ Image Section (fixed height for all cards) */}
+{/* 🖼️ Image (only if present) */}
+{item.image && (
+  <div className="w-full mb-4 bg-black/20 rounded overflow-hidden flex justify-center">
+    <img
+      src={`http://localhost:5000${item.image}`}
+      alt={item.title}
+      className="max-h-64 object-contain"
+    />
+  </div>
+)}
+
+
 
       {/* Title + Status */}
       <div className="flex justify-between items-start">
