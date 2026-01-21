@@ -65,7 +65,8 @@ function LostItems() {
         ) : filteredItems.length === 0 ? (
           <p className="text-gray-400">No lost items found.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="columns-1 md:columns-2 gap-6 space-y-8">
+
             {filteredItems.map(item => (
               <ItemCard key={item._id} item={item} />
             ))}

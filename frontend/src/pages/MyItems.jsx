@@ -65,7 +65,7 @@ function MyItems() {
             You haven’t posted any lost or found items yet.
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="columns-1 md:columns-2 gap-6 space-y-6">
             {items.map((item) => (
               <ItemCard
                 key={item._id}
