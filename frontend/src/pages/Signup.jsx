@@ -31,11 +31,13 @@ function Signup() {
 
     try {
       await API.post("/api/auth/register", {
-        name,
-        phone,
-        email,
-        password,
-      });
+  name,
+  email,
+  phone,
+  password,
+  enrollment: email.split("@")[0],
+});
+
 
       navigate("/login");
     } catch (err) {

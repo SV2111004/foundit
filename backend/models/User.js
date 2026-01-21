@@ -2,12 +2,19 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     phone: {
       type: String,
       required: true,
       match: [/^[6-9]\d{9}$/, "Invalid phone number"],
+      unique: true,
     },
+
     email: {
       type: String,
       required: true,
@@ -18,8 +25,17 @@ const userSchema = new mongoose.Schema(
       ],
     },
 
+    enrollment: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+    },
 
-    password: { type: String, required: true },
+    password: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

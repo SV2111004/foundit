@@ -3,28 +3,37 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // REGISTER
+// REGISTER
 exports.register = async (req, res) => {
   try {
     const { name, phone, email, password } = req.body;
 
-  
+    // 🔐 derive enrollment from email
+    const enrollment = email.split("@")[0];
+
+    if (!enrollment) {
+      return res.status(400).json({ message: "Invalid college email" });
+    }
 
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const existingPhone = await User.findOne({ phone });
-    if (existingPhone) {
+    if (existingPhone)
       return res.status(400).json({ message: "Phone number already in use" });
-}
 
+    const existingEnrollment = await User.findOne({ enrollment });
+    if (existingEnrollment)
+      return res.status(400).json({ message: "Enrollment already registered" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.create({
       name,
       phone,
       email,
+      enrollment, // ✅ FIXED
       password: hashedPassword,
     });
 
@@ -33,6 +42,7 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 // LOGIN
 exports.login = async (req, res) => {
