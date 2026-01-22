@@ -20,7 +20,7 @@ function ItemCard({ item, showDelete = false, onDelete }) {
 {item.image && (
   <div className="w-full mb-4 bg-black/20 rounded overflow-hidden flex justify-center">
     <img
-      src={`http://localhost:5000${item.image}`}
+      src={`https://foundit-backend-vk9b.onrender.com${item.image}`}
       alt={item.title}
       className="max-h-64 object-contain"
     />
