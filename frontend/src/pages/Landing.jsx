@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import jaypee from "../assets/jaypee.jpg";
+
 
 function Landing() {
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ function Landing() {
   return (
     <div
       className="min-h-screen bg-cover bg-center relative"
-      style={{ backgroundImage: "url('/src/assets/jaypee.jpg')" }}
+      style={{ backgroundImage: `url(${jaypee})` }}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/5 backdrop-blur-xs"></div>
